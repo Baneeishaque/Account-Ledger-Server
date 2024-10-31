@@ -4,21 +4,21 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "6323f883bbef432bde1ac366a1e23339",
+    "content-hash": "afd307b73aaf1852e136e9f7fdb63930",
     "packages": [],
     "packages-dev": [
         {
             "name": "heroku/heroku-buildpack-php",
-            "version": "v231",
+            "version": "v258",
             "source": {
                 "type": "git",
                 "url": "https://github.com/heroku/heroku-buildpack-php.git",
-                "reference": "5c628e7e989e9d96d742bea67f3245bebe5fc7be"
+                "reference": "db3b49debbfbb6e0b19b0456abcdaf750b842023"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/heroku/heroku-buildpack-php/zipball/5c628e7e989e9d96d742bea67f3245bebe5fc7be",
-                "reference": "5c628e7e989e9d96d742bea67f3245bebe5fc7be",
+                "url": "https://api.github.com/repos/heroku/heroku-buildpack-php/zipball/db3b49debbfbb6e0b19b0456abcdaf750b842023",
+                "reference": "db3b49debbfbb6e0b19b0456abcdaf750b842023",
                 "shasum": ""
             },
             "bin": [
@@ -48,14 +48,14 @@
             ],
             "support": {
                 "issues": "https://github.com/heroku/heroku-buildpack-php/issues",
-                "source": "https://github.com/heroku/heroku-buildpack-php/tree/v231"
+                "source": "https://github.com/heroku/heroku-buildpack-php/tree/v258"
             },
-            "time": "2023-02-14T21:03:27+00:00"
+            "time": "2024-10-31T14:44:09+00:00"
         }
     ],
     "aliases": [],
     "minimum-stability": "stable",
-    "stability-flags": [],
+    "stability-flags": {},
     "prefer-stable": false,
     "prefer-lowest": false,
     "platform": {
@@ -64,6 +64,6 @@
         "ext-json": "*",
         "php": "^8.0.12"
     },
-    "platform-dev": [],
-    "plugin-api-version": "2.3.0"
+    "platform-dev": {},
+    "plugin-api-version": "2.6.0"
 }
