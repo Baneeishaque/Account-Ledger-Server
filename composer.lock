@@ -4,21 +4,21 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "d1a36e8121029862c219560583346a8f",
+    "content-hash": "ee60b69635e199847691ac3c32cd90fa",
     "packages": [],
     "packages-dev": [
         {
             "name": "heroku/heroku-buildpack-php",
-            "version": "v259",
+            "version": "v261",
             "source": {
                 "type": "git",
                 "url": "https://github.com/heroku/heroku-buildpack-php.git",
-                "reference": "b27625c9b760101392b7a93d515422b4a9e77a7f"
+                "reference": "90e575937dd57c41cf7c3daa2fcfdf71cd123323"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/heroku/heroku-buildpack-php/zipball/b27625c9b760101392b7a93d515422b4a9e77a7f",
-                "reference": "b27625c9b760101392b7a93d515422b4a9e77a7f",
+                "url": "https://api.github.com/repos/heroku/heroku-buildpack-php/zipball/90e575937dd57c41cf7c3daa2fcfdf71cd123323",
+                "reference": "90e575937dd57c41cf7c3daa2fcfdf71cd123323",
                 "shasum": ""
             },
             "bin": [
@@ -48,9 +48,9 @@
             ],
             "support": {
                 "issues": "https://github.com/heroku/heroku-buildpack-php/issues",
-                "source": "https://github.com/heroku/heroku-buildpack-php/tree/v259"
+                "source": "https://github.com/heroku/heroku-buildpack-php/tree/v261"
             },
-            "time": "2024-11-22T04:46:43+00:00"
+            "time": "2024-12-20T15:57:01+00:00"
         }
     ],
     "aliases": [],
