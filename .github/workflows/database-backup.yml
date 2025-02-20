@@ -43,7 +43,7 @@ jobs:
           git commit -m "Added DB Backup file $(basename $DB_FILE) from ${SERVER_NAME} On ${DB_TIMESTAMP} Using ${SOFTWARE_NAME}"
 
       - name: Push Changes to Master
-        uses: ad-m/github-push-action@v0.6.0
+        uses: ad-m/github-push-action@v0.8.0
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           branch: master
