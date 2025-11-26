@@ -265,7 +265,16 @@ GET /select_User_Accounts_v2.php?user_id=13&parent_account_id=0
 POST /insert_Account.php
 Content-Type: application/x-www-form-urlencoded
 
-full_name=Assets:Bank:Savings&name=Savings&parent_account_id=10&account_type=ASSET&notes=&commodity_type=CURRENCY&commodity_value=INR&owner_id=13&taxable=F&place_holder=F
+full_name=Assets:Bank:Savings
+&name=Savings
+&parent_account_id=10
+&account_type=ASSET
+&notes=
+&commodity_type=CURRENCY
+&commodity_value=INR
+&owner_id=13
+&taxable=F
+&place_holder=F
 ```
 
 ---
@@ -336,7 +345,12 @@ GET /select_User_Transactions_v2m.php?user_id=13&account_id=16
 POST /insert_Transaction_v2.php
 Content-Type: application/x-www-form-urlencoded
 
-event_date_time=2024-01-15 10:30:00&user_id=13&particulars=Grocery shopping&amount=1500.00&from_account_id=16&to_account_id=25
+event_date_time=2024-01-15 10:30:00
+&user_id=13
+&particulars=Grocery shopping
+&amount=1500.00
+&from_account_id=16
+&to_account_id=25
 ```
 
 **Response:**
@@ -349,7 +363,12 @@ event_date_time=2024-01-15 10:30:00&user_id=13&particulars=Grocery shopping&amou
 POST /update_Transaction_v2.php
 Content-Type: application/x-www-form-urlencoded
 
-id=1234&event_date_time=2024-01-15 11:00:00&particulars=Updated description&amount=1600.00&from_account_id=16&to_account_id=25
+id=1234
+&event_date_time=2024-01-15 11:00:00
+&particulars=Updated description
+&amount=1600.00
+&from_account_id=16
+&to_account_id=25
 ```
 
 #### Delete Transaction V2
@@ -526,14 +545,18 @@ Account-Ledger-Server/
 4. Return JSON responses with status codes
 5. Add corresponding `.http` test file in `api_test/`
 
-**Example:**
+**Example (using prepared statements for security):**
 ```php
 <?php
 include_once 'config.php';
 
 $param = filter_input(INPUT_GET, 'param_name');
 
-$result = $con->query("SELECT * FROM table WHERE column='$param'");
+// Use prepared statements to prevent SQL injection
+$stmt = $con->prepare("SELECT * FROM table WHERE column = ?");
+$stmt->bind_param("s", $param);
+$stmt->execute();
+$result = $stmt->get_result();
 
 if (mysqli_num_rows($result) != 0) {
     $data = [];
@@ -544,7 +567,11 @@ if (mysqli_num_rows($result) != 0) {
 } else {
     echo json_encode(["status" => 1]);
 }
+
+$stmt->close();
 ```
+
+> ⚠️ **Security Note:** Always use prepared statements or parameterized queries to prevent SQL injection vulnerabilities.
 
 ---
 
@@ -591,7 +618,12 @@ Accept: application/json
 POST https://{{host}}/{{http_API_folder}}/insert_Transaction_v2.{{file_extension}}
 Content-Type: application/x-www-form-urlencoded
 
-event_date_time=2024-01-15 10:30:00&user_id=13&particulars=Test&amount=100.00&from_account_id=1&to_account_id=2
+event_date_time=2024-01-15 10:30:00
+&user_id=13
+&particulars=Test
+&amount=100.00
+&from_account_id=1
+&to_account_id=2
 ```
 
 ### Using cURL
@@ -602,10 +634,20 @@ curl -X GET "http://localhost:8000/getUsers.php"
 
 # Create a user
 curl -X POST "http://localhost:8000/insertUser.php" \
-  -d "username=newuser&passcode=password123"
+  -d "username=newuser" \
+  -d "passcode=password123"
 
 # Get user accounts
 curl -X GET "http://localhost:8000/select_User_Accounts_full.php?user_id=13"
+
+# Create a transaction
+curl -X POST "http://localhost:8000/insert_Transaction_v2.php" \
+  -d "event_date_time=2024-01-15 10:30:00" \
+  -d "user_id=13" \
+  -d "particulars=Grocery shopping" \
+  -d "amount=1500.00" \
+  -d "from_account_id=16" \
+  -d "to_account_id=25"
 ```
 
 ---
@@ -654,9 +696,21 @@ curl -X GET "http://localhost:8000/select_User_Accounts_full.php?user_id=13"
         Require all granted
     </Directory>
     
-    SetEnv CLEARDB_DATABASE_URL "mysql://user:pass@host/db"
+    # Load environment variables from secure file
+    # Option 1: Use SetEnvIf with environment file
+    Include /etc/apache2/sites-available/account-ledger-env.conf
+    
+    # Option 2: Or reference system environment variables
+    # PassEnv CLEARDB_DATABASE_URL
 </VirtualHost>
 ```
+
+Create `/etc/apache2/sites-available/account-ledger-env.conf` (chmod 600):
+```apache
+SetEnv CLEARDB_DATABASE_URL "mysql://user:pass@host/db"
+```
+
+> 🔒 **Security:** Never commit credentials to version control. Use separate environment files with restricted permissions.
 
 ### Nginx Configuration
 
@@ -674,7 +728,7 @@ server {
     location ~ \.php$ {
         fastcgi_pass unix:/var/run/php/php8.0-fpm.sock;
         fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;
-        fastcgi_param CLEARDB_DATABASE_URL "mysql://user:pass@host/db";
+        # Load environment from PHP-FPM pool config or .env file
         include fastcgi_params;
     }
 }
