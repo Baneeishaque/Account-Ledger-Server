@@ -6,6 +6,8 @@
         "https://json.schemastore.org/github-workflow.json": "file:///workspace/Account-Ledger-Server/.github/workflows/database-backup.yml"
     },
     "cSpell.words": [
+        "Banee",
+        "Ishaque",
         "fregante",
         "Kolkata",
         "mysqldump"
